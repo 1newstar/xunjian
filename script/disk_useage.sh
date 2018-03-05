@@ -19,7 +19,7 @@ INSERT_DATE=`echo $I_DATE $I_TIME`
 DISKUSED_MAX_VALUE=`df -mPx fuse.gvfs-fuse-daemon|grep -v tmpfs|grep -v /boot|grep ^/dev|grep -v denied| wc -l`
 
 
-echo "select The SQL script execution start at ||to_char(sysdate,\'yyyy-mm-dd hh24:mi:ss) from dual;"
+echo "select \'The SQL script execution start at\' ||to_char(sysdate,\'yyyy-mm-dd hh24:mi:ss\') from dual;"
 ##create sql file##
 for ((i=1;i<=$DISKUSED_MAX_VALUE;i++))
 do

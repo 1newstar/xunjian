@@ -28,7 +28,7 @@ I_TIME=`date +%H:%M:%S`
 INSERT_DATE=`echo $I_DATE $I_TIME`
 
 ##create sql file##
-echo "select The SQL script execution start at ||to_char(sysdate,\'yyyy-mm-dd hh24:mi:ss) from dual;"
+echo "select \'The SQL script execution start at\' ||to_char(sysdate,\'yyyy-mm-dd hh24:mi:ss\') from dual;"
 echo "insert into xunjian.CPU_USEAGE(INSERT_DATE,HOSTNAME,USER_PERCENT,SYSTEM_PERCENT,IO_WAIT_PERCENT,IDLE_PERCENT,LOAD1,LOAD5,LOAD15)
 values(to_date('$INSERT_DATE','yyyy-mm-dd hh24:mi:ss'),'$HOSTNAME',$USER_PERCENT,$SYSTEM_PERCENT,$IO_WAIT_PERCENT,$IDLE_PERCENT,$LOAD1,$LOAD5,$LOAD15);"
 echo "select 'The SQL script CPU_USEAGE on the $HOSTNAME has been executed' from dual;"
