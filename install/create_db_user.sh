@@ -19,9 +19,7 @@ else
 
 sqlplus -S / as sysdba << EOF
 create user $USERNAME identified by $PASS;
-grant connect,resource to xunjian;
-grant create any index to xunjian;
-grant drop any index to xunjian;
+grant connect to xunjian;
 grant select on v_\$instance to xunjian;
 grant select on v_\$database to xunjian;
 grant select on v_\$log_history to xunjian;
@@ -35,6 +33,5 @@ grant select on gv_\$asm_diskgroup to xunjian;
 grant select on gv_\$instance to xunjian;
 grant select on gv_\$parameter to xunjian;
 EOF
-
 
 fi
