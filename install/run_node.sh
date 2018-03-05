@@ -20,6 +20,8 @@ LOG_DIRECTORY=/tmp/xunjian/log/local
 
 (crontab -l; echo "#######################################xunjian_call######################################################################" ) | crontab
 
+(crontab -l; echo "*/1 * * * *   sh $SCRIPT_DIRECTORY/test_log_directory.sh  >> $LOG_DIRECTORY/test_log_directory.log 2>&1") | crontab
+
 (crontab -l; echo "*/2 * * * *   sh $SCRIPT_DIRECTORY/cpu_call.sh  >> $LOG_DIRECTORY/cpu_xunjian.log 2>&1") | crontab
 
 (crontab -l; echo "*/2 * * * *   sh $SCRIPT_DIRECTORY/memo_call.sh >> $LOG_DIRECTORY/memo_xunjian.log 2>&1") | crontab
