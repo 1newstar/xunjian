@@ -1,6 +1,12 @@
 #!/bin/bash
 . ~/.bash_profile
 
+CURRENT_USER=`whoami`
+
+if [ $CURRENT_USER == oracle ]
+then
+
+
 ##local host time##
 I_DATE=`date +%Y-%m-%d`
 I_TIME=`date +%H:%M:%S`
@@ -26,7 +32,7 @@ do
 PASSWORD=`cat ${INSTALL_PATH}database_info/source_database.sh | grep $i | awk -F + '{print $3}' | awk -F : '{print $2}'`
 
 ##Send create sql file to remote server##
-sshpass -p $PASSWORD scp -o StrictHostKeyChecking=no ${INSTALL_PATH}install/create_db_user.sh oracle@$i:/tmp/create_db_user.sh
+sshpass -p $PASSWORD scp -o StrictHostKeyChecking=no ${INSTALL_PATH}install/create_user_script/create_db_user.sh oracle@$i:/tmp/create_db_user.sh
 
 ##call the remote server SQL script##
 sshpass -p $PASSWORD ssh -o StrictHostKeyChecking=no oracle@$i  'sh /tmp/create_db_user.sh'
@@ -35,4 +41,7 @@ sshpass -p $PASSWORD ssh -o StrictHostKeyChecking=no oracle@$i  'sh /tmp/create_
 done
 wait
 
+else
+	echo "current user is "\"$CURRENT_USER\"", please  execute this file with Oracle;"
+fi
 

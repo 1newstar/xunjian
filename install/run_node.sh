@@ -1,6 +1,11 @@
 #!/bin/bash
 . ~/.bash_profile
 
+CURRENT_USER=`whoami`
+
+if [ $CURRENT_USER == oracle ]
+then
+
 cd ..
 PRECENT_DIRECTORY=`pwd`
 SCRIPT_DIRECTORY=$PRECENT_DIRECTORY/script_call
@@ -39,3 +44,7 @@ LOG_DIRECTORY=/tmp/xunjian/log/local
 
 
 echo The scheduled task \"xunjian\"  has been added
+
+else
+	echo "current user is "\"$CURRENT_USER\"", please  execute this file with Oracle;"
+fi
