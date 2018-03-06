@@ -16,7 +16,7 @@ LOCAL_HOST_TIME=`echo $I_DATE $I_TIME`
 INSTALL_PATH=`crontab -l| grep cpu_call|awk -F script_call '{print $1}'|awk -F sh '{print $2}'|awk '{print $1}'`
 
 ##source datebase info##
-SOURCE_DATABASE_IP=`cat ${INSTALL_PATH}database_info/source_database.sh | grep node | awk -F + '{print $1}' | awk -F : '{print $2}'`
+SOURCE_DATABASE_IP=`cat ${INSTALL_PATH}database_info/source_database.sh | grep node1 | awk -F + '{print $1}' | awk -F : '{print $2}'`
 
 
 echo \######################################################################
@@ -29,7 +29,7 @@ for i in $SOURCE_DATABASE_IP
 do
 {
 ##get password##
-PASSWORD=`cat ${INSTALL_PATH}database_info/source_database.sh | grep $i | awk -F + '{print $3}' | awk -F : '{print $2}'`
+PASSWORD=`cat ${INSTALL_PATH}database_info/source_database.sh | grep $i | awk -F + '{print $3}' | awk -F : '{print $2}'|awk '{print $1}'`
 
 ##Send create sql file to remote server##
 sshpass -p $PASSWORD scp -o StrictHostKeyChecking=no ${INSTALL_PATH}install/create_user_script/create_db_user.sh oracle@$i:/tmp/create_db_user.sh

@@ -28,7 +28,7 @@ select 'select ''The SQL script execution start at ''||to_char(sysdate,''yyyy-mm
 select 'insert into xunjian.UNDO_TABLESPACE_USEAGE(INSERT_DATE,HOSTNAME,TABLESPACE_NAME,TOTAL_SIZE,FREE_SIZE,USED_SIZE,USED_PERCENT,ACTIVE_SIZE,UNEXPIRED_SIZE,EXPIRED_SIZE,ACTIVE_PERCENT) values('||INSERT_DATE||','''||HOSTNAME||''','''||TABLESPACE_NAME||''','||TOTAL_SIZE||','||FREE_SIZE||','||USED_SIZE||','||USED_PERCENT||','||ACTIVE_SIZE||','||UNEXPIRED_SIZE||','||EXPIRED_SIZE||','||ACTIVE_PERCENT||');' from 	  
 (with a as (select a.tablespace_name, a.total_size,nvl(round(sum(b.bytes) / 1024 / 1024, 2), 0) free_size from (select tablespace_name, round(sum(bytes) / 1024 / 1024, 2) total_size from dba_data_files where tablespace_name like 'UNDO%'group by tablespace_name) a LEFT JOIN dba_free_space b  ON a.tablespace_name = b.tablespace_name group by a.tablespace_name, a.total_size),   
      b as (select * from (select tablespace_name, status, bytes from dba_undo_extents) pivot(sum(bytes / 1024 / 1024) for status in('ACTIVE' ACTIVE,'UNEXPIRED' UNEXPIRED,'EXPIRED' EXPIRED))),
-     c as (select a.inst_id, a.value tablespace_name, b.value instance_name from Gv\$PARAMETER a, Gv\$PARAMETER b WHERE a.inst_id = b.inst_id and a.NAME = 'undo_tablespace' and b.NAME = 'instance_name')
+     c as (select a.inst_id, a.value tablespace_name, b.value instance_name from gv\$PARAMETER a, gv\$PARAMETER b WHERE a.inst_id = b.inst_id and a.NAME = 'undo_tablespace' and b.NAME = 'instance_name')
 select 'to_date('''||to_char(sysdate,'yyyy-mm-dd hh24:mi:ss')||''',''yyyy-mm-dd hh24:mi:ss'')'INSERT_DATE,
        c.instance_name HOSTNAME,
        a.tablespace_name TABLESPACE_NAME,

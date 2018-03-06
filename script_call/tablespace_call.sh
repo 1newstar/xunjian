@@ -43,7 +43,7 @@ fi
 echo ''>/tmp/xunjian/sqlfile/$i/tablespace_created_sql.sql
 
 ##get password##
-PASSWORD=`cat ${INSTALL_PATH}database_info/source_database.sh | grep $i | awk -F + '{print $3}' | awk -F : '{print $2}'`
+PASSWORD=`cat ${INSTALL_PATH}database_info/source_database.sh | grep $i | awk -F + '{print $3}' | awk -F : '{print $2}'|awk '{print $1}'`
 
 ##Send create sql file to remote server##
 sshpass -p $PASSWORD scp -o StrictHostKeyChecking=no ${INSTALL_PATH}script/tablespace_useage.sh oracle@$i:/tmp/tablespace_useage.sh
