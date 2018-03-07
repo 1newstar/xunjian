@@ -37,14 +37,14 @@ select 'insert into xunjian.TEMP_TABLESPACE_USEAGE(INSERT_DATE,HOSTNAME,INSTANCE
        b.USED_SIZE,
        b.FREE_SIZE,
        b.USED_PERCENT
-  from (select tablespace_name, sum(bytes) / 1024 / 1024 TOTAL_SIZE
+  from (select tablespace_name, round(sum(bytes) / 1024 / 1024) TOTAL_SIZE
           from dba_temp_files
          group by tablespace_name) a,
        (select INST_ID,
                tablespace_name,
-               total_blocks * 8 / 1024 ALLOCATE_SIZE,
-               used_blocks * 8 / 1024 USED_SIZE,
-               free_blocks * 8 / 1024 FREE_SIZE,
+               round(total_blocks * 8 / 1024) ALLOCATE_SIZE,
+               round(used_blocks * 8 / 1024) USED_SIZE,
+               round(free_blocks * 8 / 1024) FREE_SIZE,
                to_char(round((used_blocks / total_blocks) * 100, 2),'fm9999999990.00') USED_PERCENT
           from gv\$sort_segment) b,
        gv\$instance c
