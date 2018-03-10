@@ -1,2 +1,9 @@
 ##source database info##                                                    		
 source_db_node1  ip:172.19.0.11  hostname:zxrac1 instance:zxrac port:1521  account:oracle  password:phjj_ora@2017
+source_db_node2  ip:172.19.0.12  hostname:zxrac2 instance:zxrac port:1521  account:oracle  password:phjj_ora@2017
+
+
+
+
+
+

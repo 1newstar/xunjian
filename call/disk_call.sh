@@ -20,7 +20,7 @@ XUNJIAN_PASSWORD=oracle
 INSTALL_PATH=/home/oracle/xunjian
 
 ##source datebase info##
-SOURCE_DB_IP=`cat $INSTALL_PATH/db_info/source_db.cnf|grep source_db_node1|awk '{print $2}'|awk -F : '{print $2}'`
+SOURCE_DB_IP=`cat $INSTALL_PATH/db_info/source_db.cnf|grep source_db_node|awk '{print $2}'|awk -F : '{print $2}'`
 
 
 ##target datebase info ##
@@ -29,7 +29,7 @@ TARGET_DB_PORT=`cat $INSTALL_PATH/db_info/target_db.cnf|grep target_db_info|awk 
 TARGET_DB_INSTANCE=`cat $INSTALL_PATH/db_info/target_db.cnf|grep target_db_info|awk '{print $4}'|awk -F : '{print $2}'`
 
 echo \######################################################################
-echo target database info is  @$TARGET_DB_IP:$TARGET_DB_PORT/$TARGET_DB_INSTANCE
+echo time:$LOCAL_TIME  target database info is  @$TARGET_DB_IP:$TARGET_DB_PORT/$TARGET_DB_INSTANCE
 echo \######################################################################
 
 for ip in $SOURCE_DB_IP

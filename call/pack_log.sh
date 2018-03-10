@@ -17,8 +17,16 @@ I_MON=`date +%Y-%m`
 I_DATE=`date +%Y-%m-%d`
 
 ##Package log folder##
-
+echo ''
 echo 'Ready to copy log file'
+echo ''
+
+echo \######################################################################
+echo time:$LOCAL_TIME  Package log file 
+echo \######################################################################
+
+
+
 
 cd /tmp/xunjian/
 tar jcvf $I_DATE.tar ./log

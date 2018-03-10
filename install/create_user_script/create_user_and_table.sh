@@ -1,8 +1,11 @@
 #!/bin/bash
 . ~/.bash_profile
 
-USERNAME=xunjian
-PASS=oracle
+
+##xunjian user##
+XUNJIAN_USER=xunjian
+XUNJIAN_PASSWORD=oracle
+
 
 USER=`sqlplus -S / as sysdba << EOF
 set heading off trimspool on feedback off
@@ -17,12 +20,14 @@ EOF`
 datafile_path=`echo ${DATAFILE%/*}`
 
 if [ "$user"x == "XUNJIAN"x ];then 
+	echo ''
 	echo user:$user is valuable don\'t need to create it again;
+	echo ''
 else
 
 sqlplus -S / as sysdba << EOF
 create  tablespace xunjian datafile '$datafile_path/xunjian01.dbf' size 5G AUTOEXTEND ON NEXT 200M MAXSIZE 31G;
-create user $USERNAME identified by $PASS default tablespace xunjian;
+create user $XUNJIAN_USER identified by $XUNJIAN_PASSWORD default tablespace xunjian;
 grant connect,resource to xunjian;
 grant create any index to xunjian;
 grant drop any index to xunjian;

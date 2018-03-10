@@ -29,7 +29,7 @@ TARGET_DB_INSTANCE=`cat $INSTALL_PATH/db_info/target_db.cnf|grep target_db_info|
 
 
 echo \######################################################################
-echo delete  process started at $LOCAL_HOST_TIME      
+echo time:$LOCAL_TIME  delete  process started at $LOCAL_HOST_TIME      
 echo target database info is  @$TARGET_DB_IP:$TARGET_DB_PORT/$TARGET_DB_INSTANCE
 echo \######################################################################
 

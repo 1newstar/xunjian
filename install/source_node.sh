@@ -18,19 +18,20 @@ INSTALL_PATH=/home/oracle/xunjian
 SOURCE_DB_IP=`cat $INSTALL_PATH/db_info/source_db.cnf|grep source_db_node1|awk '{print $2}'|awk -F : '{print $2}'`
 
 
-##target datebase info ##
-TARGET_DB_IP=`cat $INSTALL_PATH/db_info/target_db.cnf|grep target_db_info|awk '{print $2}'|awk -F : '{print $2}'`
-TARGET_DB_PORT=`cat $INSTALL_PATH/db_info/target_db.cnf|grep target_db_info|awk '{print $5}'|awk -F : '{print $2}'`
-TARGET_DB_INSTANCE=`cat $INSTALL_PATH/db_info/target_db.cnf|grep target_db_info|awk '{print $4}'|awk -F : '{print $2}'`
 
-
-echo \######################################################################
-echo source database info is  $SOURCE_DB_IP
-echo \######################################################################
 
 for ip in $SOURCE_DB_IP
 do
 {
+
+SOURCE_DB_PORT=`cat $INSTALL_PATH/db_info/source_db.cnf|grep $ip|awk '{print $5}'|awk -F : '{print $2}'`
+SOURCE_DB_INSTANCE=`cat $INSTALL_PATH/db_info/source_db.cnf|grep $ip|awk '{print $4}'|awk -F : '{print $2}'`
+
+
+echo \######################################################################
+echo source database info is  @$SOURCE_DB_IP:$SOURCE_DB_PORT/$SOURCE_DB_INSTANCE
+echo \######################################################################
+
 
 
 ##get password##

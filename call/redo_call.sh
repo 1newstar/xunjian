@@ -32,7 +32,7 @@ cat /home/oracle/xunjian/db_info/target_db.cnf|grep target_db_info|awk '{print $
 
 
 echo \######################################################################   
-echo target database info is  @$TARGET_DB_IP:$TARGET_DB_PORT/$TARGET_DB_INSTANCE
+echo time:$LOCAL_TIME target database info is  @$TARGET_DB_IP:$TARGET_DB_PORT/$TARGET_DB_INSTANCE
 echo \######################################################################
 
 for ip in $SOURCE_DB_IP

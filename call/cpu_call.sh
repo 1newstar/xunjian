@@ -20,7 +20,7 @@ XUNJIAN_PASSWORD=oracle
 INSTALL_PATH=/home/oracle/xunjian
 
 ##source datebase info##
-SOURCE_DB_IP=`cat $INSTALL_PATH/db_info/source_db.cnf|grep source_db_node1|awk '{print $2}'|awk -F : '{print $2}'`
+SOURCE_DB_IP=`cat $INSTALL_PATH/db_info/source_db.cnf|grep source_db_node|awk '{print $2}'|awk -F : '{print $2}'`
 
 
 ##target datebase info ##
@@ -30,7 +30,7 @@ TARGET_DB_INSTANCE=`cat $INSTALL_PATH/db_info/target_db.cnf|grep target_db_info|
 
 
 echo \######################################################################
-echo target database info is  @$TARGET_DB_IP:$TARGET_DB_PORT/$TARGET_DB_INSTANCE
+echo time:$LOCAL_TIME target database info is  @$TARGET_DB_IP:$TARGET_DB_PORT/$TARGET_DB_INSTANCE
 echo \######################################################################
 
 for ip in $SOURCE_DB_IP
@@ -73,7 +73,7 @@ sqlplus -S $XUNJIAN_USER/$XUNJIAN_PASSWORD@$TARGET_DB_IP:$TARGET_DB_PORT/$TARGET
 echo ''
 echo "The SQL script path is  /tmp/xunjian/sqlfile/$SOURCE_DB_HOSTNAME/cpu_created_sql.sql"
 echo "The SQL execute log path is  /tmp/xunjian/log/$SOURCE_DB_HOSTNAME/cpu.log"
-echo "The SQL script on the $SOURCE_DB_HOSTNAME has been executed"
+echo "The SQL script on the $SOURCE_DB_HOSTNAME has been executed "
 echo ''
 }& 
 done

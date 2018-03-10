@@ -1,8 +1,10 @@
 #!/bin/bash
 . ~/.bash_profile
 
-USERNAME=xunjian
-PASS=oracle
+##xunjian user##
+XUNJIAN_USER=xunjian
+XUNJIAN_PASSWORD=oracle
+
 
 USER=`sqlplus -S / as sysdba << EOF
 set heading off trimspool on feedback off
@@ -18,7 +20,7 @@ if [ "$user"x == "XUNJIAN"x ];then
 else
 
 sqlplus -S / as sysdba << EOF
-create user $USERNAME identified by $PASS;
+create user $XUNJIAN_USER identified by $XUNJIAN_PASSWORD;
 grant connect to xunjian;
 grant select on v_\$instance to xunjian;
 grant select on v_\$database to xunjian;

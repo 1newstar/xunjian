@@ -6,21 +6,36 @@ CURRENT_USER=`whoami`
 if [ $CURRENT_USER == oracle ]
 then
 
+##create log directory##
+if [ ! -d /tmp/xunjian/log/local ]
+then
+	mkdir -p /tmp/xunjian/log/local
+	echo ''
+	echo "/tmp/xunjian/log/local has been created"
+fi
+
+
+{
+crontab -l | grep xunjian > /dev/null
+TEST=$?
+}
+
+
+if [ $TEST -ne 0 ]; then
+
 cd ..
 PRECENT_DIRECTORY=`pwd`
 SCRIPT_DIRECTORY=/home/oracle/xunjian
 
 if [ $PRECENT_DIRECTORY == $SCRIPT_DIRECTORY ]
 then
-##create log directory##
-if [ ! -d /tmp/xunjian/log/local ]
-then
-mkdir -p /tmp/xunjian/log/local
-fi
+
 
 LOG_DIRECTORY=/tmp/xunjian/log/local
 
 (crontab -l; echo "#######################################xunjian_call######################################################################" ) | crontab
+
+(crontab -l; echo "*/1 * * * *   sh $SCRIPT_DIRECTORY/call/create_log_dir.sh  >> /tmp/create_log_dir.log 2>&1") | crontab
 
 (crontab -l; echo "*/1 * * * *   sh $SCRIPT_DIRECTORY/call/cpu_call.sh  >> $LOG_DIRECTORY/cpu_xunjian.log 2>&1") | crontab
 
@@ -45,13 +60,24 @@ LOG_DIRECTORY=/tmp/xunjian/log/local
 (crontab -l; echo "#######################################xunjian_call######################################################################" ) | crontab
 
 
-echo The scheduled task \"xunjian\"  has been added
+echo "The scheduled task 'xunjian' was added successfully"
+
+
 
 else
+	echo ''
 	echo "The xunjian directory must be in the /home/oracle/ directory"
+	echo ''
 fi
 
+else
+	echo ''
+	echo "The scheduled task 'xunjian'  already exists and does not need to be added again"
+	echo ''
+fi
 
 else
+	echo ''
 	echo "current user is "\"$CURRENT_USER\"", please  execute this file with Oracle;"
+	echo ''
 fi
