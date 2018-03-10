@@ -1,8 +1,6 @@
 #!/bin/bash
 . ~/.bash_profile
 
-
-
 ##sql environment variable##
 echo set linesize 8000 
 echo set pagesize 0 
@@ -38,7 +36,7 @@ SwapTotal=`cat /proc/meminfo| grep ^SwapTotal|awk '{print $2}'`
 SWAP_TOTAL=$[$SwapTotal/1024]
 
 SwapFree=`cat /proc/meminfo| grep ^SwapFree|awk '{print $2}'`
-SWAP_FREE=$[$SwapFree/1024]
+SWAP_FREE=$[$SwapFree/1024] 
 
 SWAP_USED=$[$SWAP_TOTAL-$SWAP_FREE]
 SWAP_USED_PERCENT=`awk -v x=$SWAP_USED -v y=$SWAP_TOTAL 'BEGIN{printf "%.2f",x * 100/y}'`
@@ -46,9 +44,12 @@ SWAP_USED_PERCENT=`awk -v x=$SWAP_USED -v y=$SWAP_TOTAL 'BEGIN{printf "%.2f",x *
 
 ##create sql file##
 echo "select 'The SQL script execution start at' ||to_char(sysdate,'yyyy-mm-dd hh24:mi:ss') from dual;"
-echo "insert into xunjian.MEMORY_USEAGE(INSERT_DATE,HOSTNAME,MEMO_TOTAL,MEMO_USED,MEMO_FREE,MEMO_USED_PERCENT,SWAP_TOTAL,SWAP_USED,SWAP_FREE,SWAP_USED_PERCENT)values(to_date('$INSERT_DATE','yyyy-mm-dd hh24:mi:ss'),'$HOSTNAME',$MEMO_TOTAL,$MEMO_USED,$MEMO_FREE,$MEMO_USED_PERCENT,$SWAP_TOTAL,$SWAP_USED,$SWAP_FREE,$SWAP_USED_PERCENT);"
+
+echo "insert into xunjian.MEMORY_USEAGE(HOSTNAME,MEMO_TOTAL,BUFFERS,CACHED,MEMO_FREE,MEMO_USED_PERCENT,SWAP_TOTAL,SWAP_USED,SWAP_FREE,SWAP_USED_PERCENT)
+values('$HOSTNAME',$MEMO_TOTAL,$BUFFERS,$CACHED,$MEMO_FREE,$MEMO_USED_PERCENT,$SWAP_TOTAL,$SWAP_USED,$SWAP_FREE,$SWAP_USED_PERCENT);"
 
 echo "select 'The SQL script MEMORY_USEAGE on the $HOSTNAME has been executed' from dual;" 
 echo "select '-----------------------------------------------------------'from dual;"
 echo exit
+
 

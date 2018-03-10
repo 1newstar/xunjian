@@ -26,146 +26,134 @@ create user $USERNAME identified by $PASS default tablespace xunjian;
 grant connect,resource to xunjian;
 grant create any index to xunjian;
 grant drop any index to xunjian;
-grant select on v_\$instance to xunjian;
-grant select on v_\$database to xunjian;
-grant select on v_\$log_history to xunjian;
 grant select on dba_data_files to xunjian;
 grant select on dba_free_space to xunjian;
 grant select on dba_undo_extents to xunjian;
 grant select on dba_temp_files to xunjian;
+grant select on v_\$instance to xunjian;
+grant select on v_\$database to xunjian;
+grant select on v_\$log_history to xunjian;
 grant select on gv_\$sort_segment to xunjian;
 grant select on gv_\$archived_log to xunjian;
 grant select on gv_\$asm_diskgroup to xunjian;
 grant select on gv_\$instance to xunjian;
 grant select on gv_\$parameter to xunjian;
-
-CREATE TABLE xunjian.CPU_USEAGE (
-INSERT_DATE DATE NOT NULL,
-HOSTNAME VARCHAR2(20) NOT NULL,
-USER_PERCENT NUMBER NULL,
-SYSTEM_PERCENT NUMBER NULL,
-IO_WAIT_PERCENT NUMBER NULL,
-IDLE_PERCENT NUMBER NULL,
-LOAD1 NUMBER NULL,
-LOAD5 NUMBER NULL,
-LOAD15 NUMBER NULL
+-------------------------------------------------------------------------------
+create table xunjian.cpu_useage (
+insert_date date  default sysdate,
+hostname varchar2(50) not null,
+user_percent number ,
+system_percent number ,
+io_wait_percent number ,
+load1 number
 );
-CREATE INDEX I_CPU_DATE ON xunjian.CPU_USEAGE (INSERT_DATE DESC);
-CREATE INDEX I_CPU_HOST ON xunjian.CPU_USEAGE (HOSTNAME DESC);
+create index i_cpu_date on xunjian.cpu_useage (insert_date desc);
+create index i_cpu_host on xunjian.cpu_useage (hostname);
 
-
-CREATE TABLE xunjian.MEMORY_USEAGE (
-INSERT_DATE DATE NOT NULL,
-HOSTNAME VARCHAR2(20) NOT NULL,
-MEMO_TOTAL NUMBER NULL,
-MEMO_USED NUMBER NULL,
-MEMO_FREE NUMBER NULL,
-MEMO_USED_PERCENT NUMBER NULL,
-SWAP_TOTAL NUMBER NULL,
-SWAP_USED NUMBER NULL,
-SWAP_FREE NUMBER NULL,
-SWAP_USED_PERCENT NUMBER NULL
+------------------------------------------------------------------------------
+create table xunjian.memory_useage (
+insert_date date default sysdate,
+hostname varchar2(50) not null,
+memo_total number,
+buffers number,
+cached number,
+memo_free number,
+memo_used_percent number,
+swap_total number,
+swap_used number,
+swap_free number,
+swap_used_percent number
 );
-CREATE INDEX I_MEMO_DATE ON xunjian.MEMORY_USEAGE (INSERT_DATE DESC);
-CREATE INDEX I_MEMO_HOST ON xunjian.MEMORY_USEAGE (HOSTNAME DESC);
+create index i_memo_date on xunjian.memory_useage (insert_date desc);
+create index i_memo_host on xunjian.memory_useage (hostname);
 
-CREATE TABLE xunjian.ASM_DISK_USEAGE (
-INSERT_DATE DATE NOT NULL,
-HOSTNAME VARCHAR2(20) NOT NULL,
-DISK_NAME VARCHAR2(50) NOT NULL,
-STATE VARCHAR2(20) NULL,
-TYPE VARCHAR2(20) NULL,
-TOTAL_SIZE NUMBER NULL,
-USED_SIZE NUMBER NULL,
-FREE_SIZE NUMBER NULL,
-USED_PERCENT NUMBER NULL
+
+----------------------------------------------------------------------------------
+create table xunjian.asm_disk_useage (
+insert_date date default sysdate,
+hostname varchar2(50) not null,
+disk_name varchar2(50) not null,
+total_size number,
+used_size number,
+free_size number,
+used_percent number
 );
+create index i_asmdisk_date on xunjian.asm_disk_useage (insert_date desc);
+create index i_asmdisk_host on xunjian.asm_disk_useage (hostname);
 
-CREATE INDEX I_ASMDISK_DATE ON xunjian.ASM_DISK_USEAGE (INSERT_DATE DESC);
-CREATE INDEX I_ASMDISK_HOST ON xunjian.ASM_DISK_USEAGE (HOSTNAME DESC);
-CREATE INDEX I_ASMDISK_NAME ON xunjian.ASM_DISK_USEAGE (DISK_NAME DESC);
-
-CREATE TABLE xunjian.REDO_LOG_SWITCH (
-INSERT_DATE DATE NOT NULL,
-HOSTNAME VARCHAR2(20) NOT NULL,
-INSTANCE_ID NUMBER NOT NULL,
-SWITCH_COUNT NUMBER NULL,
-SWITCH_TIME DATE NULL
+------------------------------------------------------------------------------------
+create table xunjian.redo_log_switch (
+insert_date date default sysdate,
+hostname varchar2(50) not null,
+start_time date, 
+end_time date,
+switch_count number
 );
+create index i_redo_date on xunjian.redo_log_switch (insert_date desc);
+create index i_redo_host on xunjian.redo_log_switch (hostname);
 
-CREATE INDEX I_REDO_DATE ON xunjian.REDO_LOG_SWITCH (INSERT_DATE DESC);
-CREATE INDEX I_REDO_HOST ON xunjian.REDO_LOG_SWITCH (HOSTNAME DESC);
 
-CREATE TABLE xunjian.TABLESPACE_USEAGE (
-INSERT_DATE DATE NOT NULL,
-HOSTNAME VARCHAR2(20) NOT NULL,
-DATABASE_NAME VARCHAR2(20) NOT NULL,
-TABLESPACE_NAME VARCHAR2(20) NOT NULL,
-TOTAL_SIZE NUMBER NULL,
-USED_SIZE NUMBER NULL,
-FREE_SIZE NUMBER NULL,
-USED_PERCENT NUMBER NULL
+---------------------------------------------------------------------------------
+create table xunjian.tablespace_useage (
+insert_date date default sysdate,
+hostname varchar2(50) not null,
+tablespace_name varchar2(50) not null,
+total_size number,
+used_size number,
+free_size number,
+used_percent number
 );
-
-CREATE INDEX I_TAB_DATE ON xunjian.TABLESPACE_USEAGE (INSERT_DATE DESC);
-CREATE INDEX I_TAB_HOST ON xunjian.TABLESPACE_USEAGE (HOSTNAME DESC);
-CREATE INDEX I_TAB_NAME ON xunjian.TABLESPACE_USEAGE (TABLESPACE_NAME DESC);
+create index i_tab_date on xunjian.tablespace_useage (insert_date desc);
+create index i_tab_host on xunjian.tablespace_useage (hostname);
 
 
-
-CREATE TABLE xunjian.TEMP_TABLESPACE_USEAGE (
-INSERT_DATE DATE NOT NULL,
-HOSTNAME VARCHAR2(20) NOT NULL,
-INSTANCE_ID NUMBER(1,0) NOT NULL,
-TABLESPACE_NAME VARCHAR2(20) NOT NULL,
-TOTAL_SIZE NUMBER NULL,
-ALLOCATE_SIZE NUMBER NULL,
-ALLOCATE_PERCENT NUMBER NULL,
-USED_SIZE NUMBER NULL,
-FREE_SIZE NUMBER NULL,
-USED_PERCENT NUMBER NULL
+----------------------------------------------------------------------------------
+create table xunjian.temp_tablespace_useage (
+insert_date date default sysdate,
+hostname varchar2(50) not null,
+tablespace_name varchar2(50) not null,
+total_size number,
+allocate_size number,
+allocate_percent number,
+used_size number,
+free_size number,
+used_percent number
 );
-
-CREATE INDEX I_TEMP_DATE ON xunjian.TEMP_TABLESPACE_USEAGE (INSERT_DATE DESC);
-CREATE INDEX I_TEMP_HOST ON xunjian.TEMP_TABLESPACE_USEAGE (HOSTNAME DESC);
-CREATE INDEX I_TEMP_TABNAME ON xunjian.TEMP_TABLESPACE_USEAGE (TABLESPACE_NAME DESC);
+create index i_temp_date on xunjian.temp_tablespace_useage (insert_date desc);
+create index i_temp_host on xunjian.temp_tablespace_useage (hostname);
 
 
-CREATE TABLE xunjian.DISK_USEAGE (
-INSERT_DATE DATE NOT NULL,
-HOSTNAME VARCHAR2(20) NOT NULL,
-DISK_NAME VARCHAR2(100) NOT NULL,
-TOTAL_SIZE NUMBER NULL,
-USED_SIZE NUMBER NULL,
-FREE_SIZE NUMBER NULL,
-USED_PERCENT NUMBER NULL,
-MOUNTED_ON VARCHAR2(50) NULL
+---------------------------------------------------------------------------------
+create table xunjian.disk_useage (
+insert_date date default sysdate,
+hostname varchar2(50) not null,
+disk_name varchar2(100) not null,
+total_size number,
+used_size number,
+free_size number,
+used_percent number,
+mounted_on varchar2(50)
 );
-
-CREATE INDEX I_DISK_DATE ON xunjian.DISK_USEAGE (INSERT_DATE DESC);
-CREATE INDEX I_DISK_HOST ON xunjian.DISK_USEAGE (HOSTNAME DESC);
-CREATE INDEX I_DISK_DISKNAME ON xunjian.DISK_USEAGE (DISK_NAME DESC);
+create index i_disk_date on xunjian.disk_useage (insert_date desc);
+create index i_disk_host on xunjian.disk_useage (hostname);
 
 
-CREATE TABLE xunjian.UNDO_TABLESPACE_USEAGE (
-INSERT_DATE DATE NOT NULL,
-HOSTNAME VARCHAR2(20) NOT NULL,
-TABLESPACE_NAME VARCHAR2(20) NOT NULL,
-TOTAL_SIZE NUMBER NULL,
-FREE_SIZE NUMBER NULL,
-USED_SIZE NUMBER NULL,
-USED_PERCENT NUMBER NULL,
-ACTIVE_SIZE NUMBER NULL,
-UNEXPIRED_SIZE NUMBER NULL,
-EXPIRED_SIZE NUMBER NULL,
-ACTIVE_PERCENT NUMBER NULL
+----------------------------------------------------------------------------------
+create table xunjian.undo_tablespace_useage (
+insert_date date default sysdate,
+hostname varchar2(20) not null,
+tablespace_name varchar2(20) not null,
+total_size number,
+free_size number,
+used_size number,
+used_percent number,
+active_size number,
+unexpired_size number,
+expired_size number,
+active_percent number
 );
-
-CREATE INDEX I_UNDO_DATE ON xunjian.UNDO_TABLESPACE_USEAGE (INSERT_DATE DESC);
-CREATE INDEX I_UNDO_HOST ON xunjian.UNDO_TABLESPACE_USEAGE (HOSTNAME DESC);
-CREATE INDEX I_UNDO_TABNAME ON xunjian.UNDO_TABLESPACE_USEAGE (TABLESPACE_NAME DESC);
+create index i_undo_date on xunjian.undo_tablespace_useage (insert_date desc);
+create index i_undo_host on xunjian.undo_tablespace_useage (hostname);
 
 EOF
-
-
 fi

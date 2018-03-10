@@ -16,12 +16,13 @@ LOCAL_HOST_TIME=`echo $I_DATE $I_TIME`
 I_MON=`date +%Y-%m`
 I_DATE=`date +%Y-%m-%d`
 
-
-
 ##Package log folder##
+
+echo 'Ready to copy log file'
+
 cd /tmp/xunjian/
 tar jcvf $I_DATE.tar ./log
-
+echo '-------------------------------------'
 
 ##Empty log folder##
 if [ -d /tmp/xunjian/log ]
@@ -51,11 +52,3 @@ mv $I_DATE.tar /tmp/xunjian/hist_log/$I_MON
 else
 	echo "current user is "\"$CURRENT_USER\"", please  execute this file with Oracle;"
 fi
-
-
-
-
-
-
-
-

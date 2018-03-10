@@ -1,7 +1,6 @@
 #!/bin/bash
 . ~/.bash_profile
 
-
 CURRENT_USER=`whoami`
 
 if [ $CURRENT_USER == oracle ]
@@ -10,34 +9,40 @@ then
 ##local host time##
 I_DATE=`date +%Y-%m-%d`
 I_TIME=`date +%H:%M:%S`
-LOCAL_HOST_TIME=`echo $I_DATE $I_TIME`
+LOCAL_TIME=`echo $I_DATE $I_TIME`
+
+##xunjian user##
+XUNJIAN_USER=xunjian
+XUNJIAN_PASSWORD=oracle
 
 ##script install path##
-INSTALL_PATH=`crontab -l| grep cpu_call|awk -F script_call '{print $1}'|awk -F sh '{print $2}'|awk '{print $1}'`
-
-##source datebase info##
-TARGET_DATABASE_IP=`cat ${INSTALL_PATH}database_info/target_database.sh | grep target_db_server | awk -F + '{print $1}' | awk -F : '{print $2}'`
+INSTALL_PATH=/home/oracle/xunjian
 
 
+##target datebase info ##
+TARGET_DB_IP=`cat $INSTALL_PATH/db_info/target_db.cnf|grep target_db_info|awk '{print $2}'|awk -F : '{print $2}'`
+TARGET_DB_PORT=`cat $INSTALL_PATH/db_info/target_db.cnf|grep target_db_info|awk '{print $5}'|awk -F : '{print $2}'`
+TARGET_DB_INSTANCE=`cat $INSTALL_PATH/db_info/target_db.cnf|grep target_db_info|awk '{print $4}'|awk -F : '{print $2}'`
 
 
 echo \######################################################################
-echo \"create_user_and_table.sh\" script run at $LOCAL_HOST_TIME      
-echo source database ip address is  $TARGET_DATABASE_IP
+echo target database info is  @$TARGET_DB_IP:$TARGET_DB_PORT/$TARGET_DB_INSTANCE
 echo \######################################################################
 
-
-for i in $TARGET_DATABASE_IP
+for ip in $TARGET_DB_IP
 do
 {
+
+
+
 ##get password##
-PASSWORD=`cat ${INSTALL_PATH}database_info/source_database.sh | grep $i | awk -F + '{print $3}' | awk -F : '{print $2}'|awk '{print $1}'`
+PASSWORD=`cat ${INSTALL_PATH}/db_info/source_db.cnf | grep $ip | awk '{print $7}' | awk -F : '{print $2}'|awk '{print $1}'`
 
 ##Send create sql file to remote server##
-sshpass -p $PASSWORD scp -o StrictHostKeyChecking=no ${INSTALL_PATH}install/create_user_script/create_user_and_table.sh oracle@$i:/tmp/create_user_and_table.sh
+sshpass -p $PASSWORD scp -o StrictHostKeyChecking=no ${INSTALL_PATH}/install/create_user_script/create_user_and_table.sh oracle@$ip:/tmp/create_user_and_table.sh
 
 ##call the remote server SQL script##
-sshpass -p $PASSWORD ssh -o StrictHostKeyChecking=no oracle@$i  'sh /tmp/create_user_and_table.sh'
+sshpass -p $PASSWORD ssh -o StrictHostKeyChecking=no oracle@$ip  'sh /tmp/create_user_and_table.sh'
 
 }& 
 done
