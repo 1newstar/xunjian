@@ -24,8 +24,7 @@ values('''||HOSTNAME||''','''||TABLESPACE_NAME||''','||TOTAL_SIZE||','||USED_SIZ
             from dba_free_space
            group by tablespace_name) b,
          (select host_name from v$instance) c
-   where a.tablespace_name = b.tablespace_name  
-     and  to_char(round(100 - (b.free/a.total) * 100),'fm9999999990.00')>50 );
+   where a.tablespace_name = b.tablespace_name);
 	 
 	 
 select 'select ''The SQL script TABLESPACE_USEAGE on the '||instance_name||' has been executed'' from dual;'from  v$instance;

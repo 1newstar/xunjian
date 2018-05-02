@@ -1,9 +1,21 @@
 ##source database info##                                                    		
-source_db_node1  ip:172.19.0.11  hostname:zxrac1 instance:zxrac port:1521  account:oracle  password:phjj_ora@2017
-source_db_node2  ip:172.19.0.12  hostname:zxrac2 instance:zxrac port:1521  account:oracle  password:phjj_ora@2017
-
-
-
-
-
-
+source_db_node1   ip:172.18.230.44 		hostname:bgrac1		instance:bgrac		port:1521	 account:oracle 		password:phjj_ora@2017
+source_db_node2   ip:172.18.230.45 		hostname:bgrac2		instance:bgrac		port:1521	 account:oracle 		password:phjj_ora@2017
+source_db_node1   ip:172.18.230.151  	        hostname:crmdb		instance:crmdb		port:1521	 account:oracle 		password:phjj_ora@2017
+source_db_node1   ip:172.18.230.161  	        hostname:glkjdb		instance:zzs		port:1521	 account:oracle 		password:phjj_ora@2017
+source_db_node1   ip:172.18.230.170  	        hostname:winddb		instance:winddb		port:1521	 account:oracle 		password:phjj_ora@2017
+source_db_node1   ip:172.26.80.64  		hostname:dwrac1		instance:dwrac		port:1521	 account:oracle 		password:phjj_ora@2017
+source_db_node2   ip:172.26.80.65  		hostname:dwrac2		instance:dwrac		port:1521	 account:oracle 		password:phjj_ora@2017
+source_db_node1   ip:172.19.28.14  		hostname:dsrac1		instance:dsrac		port:1521	 account:oracle 		password:phjj_ora@2017
+source_db_node2   ip:172.19.28.15  		hostname:dsrac2		instance:dsrac		port:1521	 account:oracle 		password:phjj_ora@2017
+source_db_node1   ip:172.19.28.16  		hostname:website	instance:website	port:1521	 account:oracle 		password:phjj_ora@2017
+source_db_node1   ip:172.26.80.24  		hostname:zhtrac1	instance:zhtrac		port:1521	 account:oracle 		password:phjj_ora@2017
+source_db_node2   ip:172.26.80.25  		hostname:zhtrac2	instance:zhtrac		port:1521	 account:oracle 		password:phjj_ora@2017
+source_db_node1   ip:172.26.80.26  		hostname:zhtdg1		instance:zhtrac		port:1521	 account:oracle 		password:phjj_ora@2017
+source_db_node1   ip:172.26.80.14  		hostname:tzrac1		instance:tzrac		port:1521	 account:oracle 		password:phjj_ora@2017
+source_db_node2   ip:172.26.80.15  		hostname:tzrac2		instance:tzrac		port:1521	 account:oracle 		password:phjj_ora@2017
+source_db_node1   ip:172.26.80.16    	        hostname:tzdg1		instance:tzrac		port:1521	 account:oracle 		password:phjj_ora@2017
+source_db_node1   ip:172.19.28.104 		hostname:webrac1	instance:webrac		port:1521	 account:oracle 		password:phjj_ora@2017
+source_db_node2   ip:172.19.28.105 		hostname:webrac2	instance:webrac		port:1521	 account:oracle 		password:phjj_ora@2017
+source_db_node1   ip:172.19.28.17               hostname:dsdg           instance:dsrac          port:1521        account:oracle                 password:phjj_ora@2017
+source_db_node1   ip:172.19.28.106              hostname:webdg          instance:webrac         port:1521        account:oracle                 password:phjj_ora@2017

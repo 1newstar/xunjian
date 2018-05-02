@@ -45,8 +45,8 @@ SWAP_USED_PERCENT=`awk -v x=$SWAP_USED -v y=$SWAP_TOTAL 'BEGIN{printf "%.2f",x *
 ##create sql file##
 echo "select 'The SQL script execution start at' ||to_char(sysdate,'yyyy-mm-dd hh24:mi:ss') from dual;"
 
-echo "insert into xunjian.MEMORY_USEAGE(HOSTNAME,MEMO_TOTAL,BUFFERS,CACHED,MEMO_FREE,MEMO_USED_PERCENT,SWAP_TOTAL,SWAP_USED,SWAP_FREE,SWAP_USED_PERCENT)
-values('$HOSTNAME',$MEMO_TOTAL,$BUFFERS,$CACHED,$MEMO_FREE,$MEMO_USED_PERCENT,$SWAP_TOTAL,$SWAP_USED,$SWAP_FREE,$SWAP_USED_PERCENT);"
+echo "insert into xunjian.MEMORY_USEAGE(HOSTNAME,MEMO_TOTAL,BUFFERS,CACHED,FREE,MEMO_USED_PERCENT,SWAP_TOTAL,SWAP_USED,SWAP_FREE,SWAP_USED_PERCENT)
+values('$HOSTNAME',$MEMO_TOTAL,$BUFFERS,$CACHED,$FREE,$MEMO_USED_PERCENT,$SWAP_TOTAL,$SWAP_USED,$SWAP_FREE,$SWAP_USED_PERCENT);"
 
 echo "select 'The SQL script MEMORY_USEAGE on the $HOSTNAME has been executed' from dual;" 
 echo "select '-----------------------------------------------------------'from dual;"

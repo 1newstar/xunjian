@@ -3,7 +3,7 @@
 
 ##xunjian user##
 XUNJIAN_USER=xunjian
-XUNJIAN_PASSWORD=oracle
+XUNJIAN_PASSWORD=xunjian#2018
 
 
 USER=`sqlplus -S / as sysdba << EOF
@@ -21,19 +21,19 @@ else
 
 sqlplus -S / as sysdba << EOF
 create user $XUNJIAN_USER identified by $XUNJIAN_PASSWORD;
-grant connect to xunjian;
-grant select on v_\$instance to xunjian;
-grant select on v_\$database to xunjian;
-grant select on v_\$log_history to xunjian;
-grant select on dba_data_files to xunjian;
-grant select on dba_free_space to xunjian;
-grant select on dba_undo_extents to xunjian;
-grant select on dba_temp_files to xunjian;
-grant select on gv_\$sort_segment to xunjian;
-grant select on gv_\$archived_log to xunjian;
-grant select on gv_\$asm_diskgroup to xunjian;
-grant select on gv_\$instance to xunjian;
-grant select on gv_\$parameter to xunjian;
+grant connect to $XUNJIAN_USER;
+grant select on v_\$instance to $XUNJIAN_USER;
+grant select on v_\$database to $XUNJIAN_USER;
+grant select on v_\$log_history to $XUNJIAN_USER;
+grant select on dba_data_files to $XUNJIAN_USER;
+grant select on dba_free_space to $XUNJIAN_USER;
+grant select on dba_undo_extents to $XUNJIAN_USER;
+grant select on dba_temp_files to $XUNJIAN_USER;
+grant select on gv_\$sort_segment to $XUNJIAN_USER;
+grant select on gv_\$archived_log to $XUNJIAN_USER;
+grant select on gv_\$asm_diskgroup to $XUNJIAN_USER;
+grant select on gv_\$instance to $XUNJIAN_USER;
+grant select on gv_\$parameter to $XUNJIAN_USER;
 EOF
 
 fi

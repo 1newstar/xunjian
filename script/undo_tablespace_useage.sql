@@ -21,8 +21,11 @@ select 'insert into xunjian.UNDO_TABLESPACE_USEAGE(HOSTNAME,TABLESPACE_NAME,TOTA
                    group by tablespace_name) b
          on a.tablespace_name = b.tablespace_name),     
       b as (select * from (select tablespace_name, status, bytes from dba_undo_extents) pivot(sum(bytes / 1024 / 1024) for status in('ACTIVE' ACTIVE,'UNEXPIRED' UNEXPIRED,'EXPIRED' EXPIRED))),
-      c as (select a.inst_id, a.value tablespace_name, b.value instance_name from gv$parameter a, gv$parameter b where a.inst_id = b.inst_id and a.NAME = 'undo_tablespace' and b.NAME = 'instance_name')
-select nvl(c.instance_name,'$HOSTNAME') HOSTNAME,
+      c as (select a.inst_id, a.value tablespace_name, c.host_name
+  from gv$parameter a join  gv$parameter b  on a.inst_id = b.inst_id  right join gv$instance c on b.value = c.instance_name 
+ where a.NAME = 'undo_tablespace'
+   and b.NAME = 'instance_name')
+select nvl(c.host_name,'$HOSTNAME') HOSTNAME,
        a.tablespace_name TABLESPACE_NAME,
        a.total_size TOTAL_SIZE,
        a.free_size FREE_SIZE,
@@ -32,7 +35,7 @@ select nvl(c.instance_name,'$HOSTNAME') HOSTNAME,
        nvl(round(b.UNEXPIRED, 2), 0) UNEXPIRED_SIZE,
        nvl(round(b.EXPIRED, 2), 0) EXPIRED_SIZE,
        to_char(round(nvl(b.ACTIVE, 0) / (a.total_size - a.free_size) * 100, 2), 'fm9999999990.00') ACTIVE_PERCENT
-  from a join b on  a.tablespace_name = b.tablespace_name left join c on a.tablespace_name = c.tablespace_name);
+  from a join b on  a.tablespace_name = b.tablespace_name  join c on a.tablespace_name = c.tablespace_name);
    
 select 'select ''The SQL script UNDO_TABLESPACE_USEAGE on the '||instance_name||' has been executed'' from dual;'from  v$instance;
 select 'select ''-----------------------------------------------------------''from dual;' from dual;

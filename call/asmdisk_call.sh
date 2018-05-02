@@ -12,8 +12,9 @@ I_TIME=`date +%H:%M:%S`
 LOCAL_TIME=`echo $I_DATE $I_TIME`
 
 ##xunjian user##
-XUNJIAN_USER=xunjian
-XUNJIAN_PASSWORD=oracle
+XUNJIAN_USER=`cat /home/oracle/xunjian/db_info/xunjian_user.cnf | grep XUNJIAN_USER| awk -F = '{print $2}'|awk '{print $1}'`
+XUNJIAN_PASSWORD=`cat /home/oracle/xunjian/db_info/xunjian_user.cnf | grep XUNJIAN_PASSWORD| awk -F = '{print $2}'|awk '{print $1}'`
+
 
 ##script install path##
 INSTALL_PATH=/home/oracle/xunjian
@@ -61,7 +62,7 @@ echo ''>/tmp/xunjian/sqlfile/$SOURCE_DB_HOSTNAME/asmdisk_created_sql.sql
 
 ##connect source database and get database data##
 sqlplus -S $XUNJIAN_USER/$XUNJIAN_PASSWORD@$ip:$SOURCE_DB_PORT/$SOURCE_DB_INSTANCE  @$INSTALL_PATH/script/asm_disk_useage.sql >>/tmp/xunjian/sqlfile/$SOURCE_DB_HOSTNAME/asmdisk_created_sql.sql
-
+echo $ip
 
 ##execute sql##
 sqlplus -S $XUNJIAN_USER/$XUNJIAN_PASSWORD@$TARGET_DB_IP:$TARGET_DB_PORT/$TARGET_DB_INSTANCE @/tmp/xunjian/sqlfile/$SOURCE_DB_HOSTNAME/asmdisk_created_sql.sql >>/tmp/xunjian/log/$SOURCE_DB_HOSTNAME/asmdisk.log
@@ -81,8 +82,4 @@ wait
 else
 	echo "current user is "\"$CURRENT_USER\"", please  execute this file with Oracle;"
 fi
-
-
-
-
 

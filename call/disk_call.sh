@@ -13,8 +13,8 @@ I_TIME=`date +%H:%M:%S`
 LOCAL_TIME=`echo $I_DATE $I_TIME`
 
 ##xunjian user##
-XUNJIAN_USER=xunjian
-XUNJIAN_PASSWORD=oracle
+XUNJIAN_USER=`cat /home/oracle/xunjian/db_info/xunjian_user.cnf | grep XUNJIAN_USER| awk -F = '{print $2}'|awk '{print $1}'`
+XUNJIAN_PASSWORD=`cat /home/oracle/xunjian/db_info/xunjian_user.cnf | grep XUNJIAN_PASSWORD| awk -F = '{print $2}'|awk '{print $1}'`
 
 ##script install path##
 INSTALL_PATH=/home/oracle/xunjian
@@ -66,7 +66,9 @@ sshpass -p $PASSWORD scp -o StrictHostKeyChecking=no ${INSTALL_PATH}/script/disk
 sshpass -p $PASSWORD ssh -o StrictHostKeyChecking=no $ip  'sh /tmp/disk_useage.sh'>>/tmp/xunjian/sqlfile/$SOURCE_DB_HOSTNAME/disk_created_sql.sql
 
 ##execute sql##
-sqlplus -S xunjian/oracle$TARGET_DATABASE @/tmp/xunjian/sqlfile/$SOURCE_DB_HOSTNAME/disk_created_sql.sql >>/tmp/xunjian/log/$SOURCE_DB_HOSTNAME/disk.log
+sqlplus -S $XUNJIAN_USER/$XUNJIAN_PASSWORD@$TARGET_DB_IP:$TARGET_DB_PORT/$TARGET_DB_INSTANCE @/tmp/xunjian/sqlfile/$SOURCE_DB_HOSTNAME/disk_created_sql.sql >>/tmp/xunjian/log/$SOURCE_DB_HOSTNAME/disk.log
+echo $XUNJIAN_USER/$XUNJIAN_PASSWORD@$TARGET_DB_IP:$TARGET_DB_PORT/$TARGET_DB_INSTANCE
+
 
 echo ''
 echo "The SQL script path  /tmp/xunjian/sqlfile/$SOURCE_DB_HOSTNAME/disk_created_sql.sql"

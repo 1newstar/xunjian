@@ -12,8 +12,8 @@ I_TIME=`date +%H:%M:%S`
 LOCAL_TIME=`echo $I_DATE $I_TIME`
 
 ##xunjian user##
-XUNJIAN_USER=xunjian
-XUNJIAN_PASSWORD=oracle
+XUNJIAN_USER=`cat /home/oracle/xunjian/db_info/xunjian_user.cnf | grep XUNJIAN_USER| awk -F = '{print $2}'|awk '{print $1}'`
+XUNJIAN_PASSWORD=`cat /home/oracle/xunjian/db_info/xunjian_user.cnf | grep XUNJIAN_PASSWORD| awk -F = '{print $2}'|awk '{print $1}'`
 
 ##script install path##
 INSTALL_PATH=/home/oracle/xunjian
